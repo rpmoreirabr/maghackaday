@@ -1,0 +1,61 @@
+body {
+    background: white;
+    font: 14pt arial;
+    color: black;
+}
+
+.boxOferta {
+    float: left;
+    border: 1pt solid black;
+    margin: 5%;
+    width: 39%
+}
+
+.boxOferta .descricao {
+    margin-left: 10px;
+}
+
+.titulo {
+    text-align: center;
+    font-weight: bold;
+}
+
+.btnSelecionar {
+    display: inline-block;
+    border-radius: 8px;
+    border: none;
+    color: #FFFFFF;
+    text-align: center;
+    font-size: 18px;
+    padding: 20px;
+    width: 200px;
+    transition: all 0.5s;
+    cursor: pointer;
+    margin: 5px;
+    background-color: #0076c3;
+}
+
+.btnSelecionar span {
+    cursor: pointer;
+    display: inline-block;
+    position: relative;
+    transition: 0.5s;
+}
+
+.btnSelecionar span:after {
+    content: '\00bb';
+    position: absolute;
+    opacity: 0;
+    top: 0;
+    right: -20px;
+    transition: 0.5s;
+}
+
+.btnSelecionar:hover span {
+    padding-right: 25px;
+}
+
+.btnSelecionar:hover span:after {
+    opacity: 1;
+    right: 0;
+}
