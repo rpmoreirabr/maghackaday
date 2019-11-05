@@ -1,0 +1,133 @@
+<html>
+
+<head>
+    <link rel="stylesheet" type="text/css" href="css/demo.css" />
+    <script type="text/javascript" src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script type="text/javascript" src="scripts/index.js"></script>
+</head>
+
+<body>
+    <div>
+        <h1 class="titulo">Preencha os seus dados:</h1>
+    </div>
+    <div style="margin: 0 10%">
+        <div>
+            <h3>Dados Pessoais</h3>
+        </div>
+        <div class="parametro">CPF</div>
+        <div class="campo"><input type="text" size="14" maxlength="14" onkeypress="MascaraCPF(this)"></div>
+        <div class="parametro">Nome Completo</div>
+        <div class="campo"><input type="text" maxlength="50" size="50"></div>
+        <div class="parametro">Data de Nascimento</div>
+        <div class="campo"><input type="text" size="15" maxlength="10" onKeyPress="MascaraData(this);"></div>
+        <div class="parametro">Tipo de Documento</div>
+        <div class="campo">
+            <select>
+                <option value="0" selected="true">Selecione o Tipo de Documento</option>
+                <option value="CNH">CNH</option>
+                <option value="CPF">CPF</option>
+                <option value="PASSAPORTE">PASSAPORTE</option>
+                <option value="RG">RG</option>
+                <option value="REGISTRO PROFISSIONAL">REGISTRO PROFISSIONAL</option>
+                <option value="CNPJ">CNPJ</option>
+                <option value="OUTRO">OUTRO</option>
+            </select>
+        </div>
+        <div class="parametro">Orgão</div>
+        <div class="campo"><input type="text" maxlength="10" size="10"></div>
+        <div class="parametro">Número de Documento</div>
+        <div class="campo"><input type="text" maxlength="50" size="50"></div>
+        <div class="parametro">Email</div>
+        <div class="campo"><input type="text" maxlength="50" size="50"></div>
+        <div class="parametro">Celular</div>
+        <div class="campo"><input type="text" maxlength="50" size="50"></div>
+        <div class="parametro">Telefone</div>
+        <div class="campo"><input type="text" maxlength="50" size="50"></div>
+        <div class="parametro">CEP</div>
+        <div class="campo"><input type="text" maxlength="50" size="50"></div>
+        <div class="parametro">Endereço</div>
+        <div class="campo"><input type="text" maxlength="50" size="50"></div>
+        <div class="parametro">Número</div>
+        <div class="campo"><input type="text" maxlength="50" size="50"></div>
+        <div class="parametro">Complemento</div>
+        <div class="campo"><input type="text" maxlength="50" size="50"></div>
+        <div class="parametro">Bairro</div>
+        <div class="campo"><input type="text" maxlength="50" size="50"></div>
+        <div class="parametro">Estado</div>
+        <div class="campo">
+            <select width="100px">
+                <option value="0" selected="true">Selecione o Estado</option>
+                <option value="AC">AC</option>
+                <option value="AL">AL</option>
+                <option value="AP">AP</option>
+                <option value="AM">AM</option>
+                <option value="BA">BA</option>
+                <option value="CE">CE</option>
+                <option value="DF">DF</option>
+                <option value="ES">ES</option>
+                <option value="GO">GO</option>
+                <option value="MA">MA</option>
+                <option value="MT">MT</option>
+                <option value="MS">MS</option>
+                <option value="MG">MG</option>
+                <option value="PA">PA</option>
+                <option value="PB">PB</option>
+                <option value="PR">PR</option>
+                <option value="PE">PE</option>
+                <option value="PI">PI</option>
+                <option value="RJ">RJ</option>
+                <option value="RN">RN</option>
+                <option value="RS">RS</option>
+                <option value="RO">RO</option>
+                <option value="RR">RR</option>
+                <option value="SP">SP</option>
+                <option value="SE">SE</option>
+                <option value="TO">TO</option>
+            </select>
+        </div>
+        <div class="parametro">Cidade</div>
+        <div class="campo"><input type="text" maxlength="50" size="50"></div>
+        <div class="parametro">Telefone</div>
+        <div class="campo"><input type="text" maxlength="50" size="50"></div>
+        <div class="parametro">Pessoa Politicamente Exposta</div>
+        <div class="campo"><input type="text" maxlength="50" size="50"></div>
+        <div class="parametro">Residente no Brasil</div>
+        <div class="campo"><input type="text" maxlength="50" size="50"></div>
+        <div style="clear:both;">
+            <h3>Beneficiários</h3>
+        </div>
+        <div class="parametro">Nome Completo</div>
+        <div class="campo"><input type="text"></div>
+        <div class="parametro">Data de Nascimento</div>
+        <div class="campo"><input type="text" size="15" maxlength="10" onKeyPress="MascaraData(this);"></div>
+        <div class="parametro">Parentesco</div>
+        <div class="campo">
+            <select width="100px">
+                <option value="0" selected="true">Selecione o Parentesco</option>
+                <option value="AVO">AVO</option>
+                <option value="COMPANHEIRO">COMPANHEIRO</option>
+                <option value="CONJUGE">CONJUGE</option>
+                <option value="FILHO">FILHO</option>
+                <option value="IRMAO">IRMAO</option>
+                <option value="MAE">MAE</option>
+                <option value="NENHUM">NENHUM</option>
+                <option value="NETO">NETO</option>
+                <option value="PAI">PAI</option>
+                <option value="SOBRINHO">SOBRINHO</option>
+                <option value="TIO">TIO</option>
+            </select>
+        </div>
+        <div class="parametro">Participação</div>
+        <div class="campo"><input type="text"></div>
+        <div style="clear:both;">
+            <h3>Declaração Pessoal de Saúde</h3>
+        </div>
+        <div class="parametro">Faz uso de algum medicamento?</div>
+        <div class="campo"><input type="text"></div>
+        <div style="clear:both;">
+            <h3>Formas de Pagamento</h3>
+        </div>
+    </div>
+</body>
+
+</html>

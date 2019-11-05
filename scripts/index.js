@@ -1,5 +1,9 @@
 $(function() {
-    $(".btnSelecionar").click(function() {
+    $("#simular").click(function() {
+        $("#simulacao").show();
+    });
+
+    $("#contratar").click(function() {
         window.location = "simulacao.html?Oferta=" + this.id
     });
 

@@ -4,6 +4,13 @@
     <link rel="stylesheet" type="text/css" href="css/demo.css" />
     <script type="text/javascript" src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
     <script type="text/javascript" src="scripts/index.js"></script>
+    <script>
+        $(function() {
+            $(".btnSelecionar").click(function() {
+                window.location = "simulacao.html?Oferta=" + this.id
+            });
+        });
+    </script>
 </head>
 
 <body>
