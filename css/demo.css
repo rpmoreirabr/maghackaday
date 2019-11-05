@@ -15,9 +15,49 @@ body {
     margin-left: 10px;
 }
 
+.boxPerfil {
+    clear: both;
+    border: 1pt solid black;
+    margin: 50px 10%;
+    width: 80%;
+    height: 650px;
+}
+
+.boxPerfil .parametro {
+    width: 200px;
+    clear: both;
+    float: left;
+    margin: 10px 10px;
+    padding: 20px 0px;
+}
+
+.boxPerfil .campo {
+    float: left;
+    margin: 10px 0px;
+}
+
 .titulo {
     text-align: center;
     font-weight: bold;
+}
+
+input[type=text] {
+    width: 100%;
+    padding: 12px 20px;
+    margin: 8px 0;
+    box-sizing: border-box;
+}
+
+input[type=radio] {
+    margin: 20px 10px;
+    box-sizing: border-box;
+}
+
+select {
+    width: 260px;
+    padding: 12px 20px;
+    margin: 8px 0;
+    box-sizing: border-box;
 }
 
 .btnSelecionar {
