@@ -1,30 +1,6 @@
 $(function() {
-    $("#simular").click(function() {
-        $("#simulacao").show();
-    });
-
     $("#contratar").click(function() {
         window.location = "simulacao.html?Oferta=" + this.id
-    });
-
-    $('.aumentarCapital').click(function() {
-        var codigoProduto = this.value;
-        var capitalTexto = $('#lblCapital' + codigoProduto).text().replace("R\$", "")
-            .replace('.', '')
-            .replace(',', '.');
-        var capital = parseFloat(capitalTexto);
-        capital += 1000;
-        $("#lblCapital" + codigoProduto).text("R$" + capital + ",00");
-    });
-
-    $('.reduzirCapital').click(function() {
-        var codigoProduto = this.value;
-        var capitalTexto = $('#lblCapital' + codigoProduto).text().replace("R\$", "")
-            .replace('.', '')
-            .replace(',', '.');
-        var capital = parseFloat(capitalTexto);
-        capital -= 1000;
-        $("#lblCapital" + codigoProduto).text("R$ " + capital.toFixed(2).replace(".", ",")).toLocaleString('pt-BR');
     });
 });
 

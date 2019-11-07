@@ -5,14 +5,81 @@
     <script type="text/javascript" src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
     <script type="text/javascript" src="scripts/maskMoney.js"></script>
     <script type="text/javascript" src="scripts/index.js"></script>
+    <script type="text/javascript" src="scripts/apiClient.js"></script>
+
     <script>
         $(function() {
-            $("#renda").maskMoney({
+            $("#txtRenda").maskMoney({
                 symbol: 'R$',
                 showSymbol: true,
                 thousands: '.',
                 decimal: ',',
                 symbolStay: true
+            });
+
+            var profissoes = getProfissoes();
+            $.each(profissoes.Valor, function() {
+                $("#ddlProfissoes").append($("<option />").val(this.Auxiliar).text(this.Descricao));
+            });
+
+            $("#simular").click(function() {
+                var sexo = $("input[name='sexo']:checked").val();
+                var cpf = $("#txtCpf").val().replace(/\D/g, '');
+                var dataNasc = $("#txtDataNascimento").val();
+                var renda = $("#txtRenda").val();
+                var profissao = $("#ddlProfissoes").val();
+                var estado = $("#ddlEstado").val();
+
+                var simulacao = postSimulacao(sexo, dataNasc, cpf, profissao, renda, estado);
+
+                $("#simulacao").show();
+
+                for (var i = 0; i < simulacao.Valor.simulacoes[0].produtos.length; i++) {
+                    var produto = simulacao.Valor.simulacoes[0].produtos[i];
+                    var idBox = "box" + produto.idProduto;
+                    $("#template")
+                        .clone()
+                        .attr("id", idBox)
+                        .show()
+                        .appendTo($("#simulacao"));
+
+                    $("#" + idBox + " .titulo").text(produto.descricao);
+
+                    if (produto.coberturas[0].custoFixo > 0) {
+                        $("#" + idBox + " .lblPremio").text("R$" + produto.coberturas[0].custoFixo.toFixed(2));
+                        $("#" + idBox + " .aumentarCapital").hide();
+                        $("#" + idBox + " .reduzirCapital").hide();
+                    } else {
+                        var premio = 10000 / produto.coberturas[0].capitalBase * produto.coberturas[0].premioBase;
+                        $("#" + idBox + " .lblPremio").text("R$" + premio.toFixed(2));
+                        $("#" + idBox + " .aumentarCapital").val(JSON.stringify(produto));
+                        $("#" + idBox + " .reduzirCapital").val(JSON.stringify(produto));
+                    }
+                }
+            });
+
+
+            $('.aumentarCapital').click(function() {
+                alert(JSON.stringify(this.value));
+
+                var codigoProduto = this.value;
+                var capitalTexto = $('#lblCapital' + codigoProduto).text().replace("R\$", "")
+                    .replace('.', '')
+                    .replace(',', '.');
+                var capital = parseFloat(capitalTexto);
+                capital += 1000;
+                $("#lblCapital" + codigoProduto).text("R$" + capital + ",00");
+            });
+
+            $('.reduzirCapital').click(function() {
+                alert(JSON.stringify(this.value));
+                var codigoProduto = this.value;
+                var capitalTexto = $('#lblCapital' + codigoProduto).text().replace("R\$", "")
+                    .replace('.', '')
+                    .replace(',', '.');
+                var capital = parseFloat(capitalTexto);
+                capital -= 1000;
+                $("#lblCapital" + codigoProduto).text("R$ " + capital.toFixed(2).replace(".", ",")).toLocaleString('pt-BR');
             });
         })
     </script>
@@ -27,10 +94,10 @@
             <h2 class="titulo">Perfil</h2>
             <div class="descricao">
                 <div class="parametro">CPF</div>
-                <div class="campo"><input type="text" size="27" maxlength="14" onKeyPress="MascaraCPF(this);"></div>
+                <div class="campo"><input id="txtCpf" type="text" size="27" maxlength="14" onKeyPress="MascaraCPF(this);"></div>
                 <div class="parametro">Data de Nascimento</div>
                 <div class="campo">
-                    <input type="text" size="27" maxlength="10" onKeyPress="MascaraData(this);"></div>
+                    <input type="text" id="txtDataNascimento" size="27" maxlength="10" onKeyPress="MascaraData(this);"></div>
                 <div class=" parametro">Sexo</div>
                 <div class="campo">
                     <input type="radio" name="sexo" value="1">Masculino</input>
@@ -38,15 +105,15 @@
                 </div>
                 <div class="parametro">Profissao</div>
                 <div class="campo">
-                    <select width="100px">
+                    <select width="100px" id="ddlProfissoes">
                         <option value="0" selected="true">Selecione a Profissão</option>
                     </select>
                 </div>
                 <div class="parametro">Renda</div>
-                <div class="campo"><input id="renda" type="text" size="27"></div>
+                <div class="campo"><input id="txtRenda" type="text" size="27"></div>
                 <div class="parametro">Estado</div>
                 <div class="campo">
-                    <select width="100px">
+                    <select width="100px" id="ddlEstado">
                             <option value="0" selected="true">Selecione o Estado</option>
                             <option value="AC">AC</option>
                             <option value="AL">AL</option>
@@ -83,63 +150,18 @@
         </div>
         <div id="simulacao" style="display: none;">
             <h2 class="titulo">Resultado da Simulação</h2>
-            <div class="boxOferta">
+            <div class="boxOferta" id="template" style="display:none">
                 <p class="titulo">Produto 1</p>
                 <div class="descricao">
                     <p style="text-align: center"><strong>Prêmio:</strong></p>
-                    <p style="text-align: center"><label id="lblPremio1">R$15,90</label></p>
+                    <p style="text-align: center"><label class="lblPremio">R$15,90</label></p>
                 </div>
                 <div class="descricao">
                     <p style="text-align: center"><strong>Cobertura:</strong></p>
-                    <div style="text-align: center;margin: 0px 0px 20px 0px">
+                    <div style="text-align: center;margin: 0px 0px 20px 0px" class="detalhes">
                         <button class="aumentarCapital" value="1">+</button>
-                        <label style="margin: 0px 10px" id="lblCapital1">R$100000,00</label>
+                        <label style="margin: 0px 10px" class="lblCapital">R$10000,00</label>
                         <button class="reduzirCapital" value="1">-</button>
-                    </div>
-                </div>
-            </div>
-            <div class="boxOferta">
-                <p class="titulo">Produto 2</p>
-                <div class="descricao">
-                    <p style="text-align: center"><strong>Prêmio:</strong></p>
-                    <p style="text-align: center"><label id="lblPremio2">R$15,90</label></p>
-                </div>
-                <div class="descricao">
-                    <p style="text-align: center"><strong>Cobertura:</strong></p>
-                    <div style="text-align: center;margin: 0px 0px 20px 0px">
-                        <button class="aumentarCapital" value="2">+</button>
-                        <label style="margin: 0px 10px" id="lblCapital2">R$100000,00</label>
-                        <button class="reduzirCapital" value="2">-</button>
-                    </div>
-                </div>
-            </div>
-            <div class="boxOferta">
-                <p class="titulo">Produto 3</p>
-                <div class="descricao">
-                    <p style="text-align: center"><strong>Prêmio:</strong></p>
-                    <p style="text-align: center"><label id="lblPremio3">R$15,90</label></p>
-                </div>
-                <div class="descricao">
-                    <p style="text-align: center"><strong>Cobertura:</strong></p>
-                    <div style="text-align: center;margin: 0px 0px 20px 0px">
-                        <button class="aumentarCapital" value="3">+</button>
-                        <label style="margin: 0px 10px" id="lblCapital3">R$100000,00</label>
-                        <button class="reduzirCapital" value="3">-</button>
-                    </div>
-                </div>
-            </div>
-            <div class="boxOferta">
-                <p class="titulo">Produto 4</p>
-                <div class="descricao">
-                    <p style="text-align: center"><strong>Prêmio:</strong></p>
-                    <p style="text-align: center"><label id="lblPremio4">R$15,90</label></p>
-                </div>
-                <div class="descricao">
-                    <p style="text-align: center"><strong>Cobertura:</strong></p>
-                    <div style="text-align: center;margin: 0px 0px 20px 0px">
-                        <button class="aumentarCapital" value="4">+</button>
-                        <label style="margin: 0px 10px" id="lblCapital4">R$100000,00</label>
-                        <button class="reduzirCapital" value="4">-</button>
                     </div>
                 </div>
             </div>

@@ -4,8 +4,26 @@
     <link rel="stylesheet" type="text/css" href="css/demo.css" />
     <script type="text/javascript" src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
     <script type="text/javascript" src="scripts/index.js"></script>
+    <script type="text/javascript" src="scripts/apiClient.js"></script>
+
     <script>
         $(function() {
+            var ofertas = getModelosProposta();
+            for (var i = 0; i < ofertas.Valor.length; i++) {
+                var mp = ofertas.Valor[i];
+                $(".boxOferta")
+                    .clone()
+                    .attr("id", "box" + mp.id)
+                    .show()
+                    .appendTo($("#base"));
+
+                $("#box" + mp.id + " .titulo").text(mp.nome)
+                $("#box" + mp.id + " .btnSelecionar").attr("id", mp.id);
+
+                for (var j = 0; j < mp.produtos.length; j++) {
+                    $("#box" + mp.id + " .descricao").append("<p>" + mp.produtos[j].descricao + "</p>");
+                }
+            }
             $(".btnSelecionar").click(function() {
                 window.location = "simulacao.html?Oferta=" + this.id
             });
@@ -17,52 +35,18 @@
     <div>
         <h1 class="titulo">Escolha a sua Oferta</h1>
     </div>
-    <div>
-        <div class="boxOferta">
+    <div id="base">
+        <div class="boxOferta" style="display:none">
             <p class="titulo">Oferta Individual</p>
             <div class="descricao">
-                <p>Morte Qualquer Causa</p>
-                <p>Dit</p>
-                <p>Invalidez</p>
             </div>
             <p style="text-align: center;">
                 <button class="btnSelecionar" id="oferta"><span>Selecionar</span></button>
             </p>
         </div>
-        <div class="boxOferta">
-            <p class="titulo">Oferta Individual 2</p>
-            <div class="descricao">
-                <p>Morte Qualquer Causa</p>
-                <p>Dit</p>
-                <p>Invalidez</p>
-            </div>
-            <p style="text-align: center;">
-                <button class="btnSelecionar" id="oferta2"><span>Selecionar</span></button>
-            </p>
-        </div>
-        <div style="float:clear"></div>
-        <div class="boxOferta">
-            <p class="titulo">Oferta Individual 3</p>
-            <div class="descricao">
-                <p>Morte Qualquer Causa</p>
-                <p>Dit</p>
-                <p>Invalidez</p>
-            </div>
-            <p style="text-align: center;">
-                <button class="btnSelecionar" id="oferta3"><span>Selecionar</span></button>
-            </p>
-        </div>
-        <div class="boxOferta">
-            <p class="titulo">Oferta Individual 4</p>
-            <div class="descricao">
-                <p>Morte Qualquer Causa</p>
-                <p>Dit</p>
-                <p>Invalidez</p>
-            </div>
-            <p style="text-align: center;">
-                <button class="btnSelecionar" id="oferta4"><span>Selecionar</span></button>
-            </p>
-        </div>
+    </div>
+    <div class="loading style-2;" style="visibility: hidden;">
+        <div class="loading-wheel"></div>
     </div>
 </body>
 

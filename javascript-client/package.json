@@ -1,0 +1,22 @@
+{
+  "name": "apiseguradora",
+  "version": "v1",
+  "description": "Servios_de_Negcios_expostos_atravs_de_RESTful_services_para_integraes_com_parceiros_e_agilidade_no_desenvolvimento_interno_de_softwares_da_companhia_",
+  "license": "Unlicense",
+  "main": "src/index.js",
+  "scripts": {
+    "test": "mocha --recursive"
+  },
+  "browser": {
+    "fs": false
+  },
+  "dependencies": {
+    "superagent": "3.7.0",
+    "querystring": "0.2.0"
+  },
+  "devDependencies": {
+    "mocha": "~2.3.4",
+    "sinon": "1.17.3",
+    "expect.js": "~0.3.1"
+  }
+}
