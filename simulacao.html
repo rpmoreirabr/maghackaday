@@ -52,36 +52,37 @@
                     } else {
                         var premio = 10000 / produto.coberturas[0].capitalBase * produto.coberturas[0].premioBase;
                         $("#" + idBox + " .lblPremio").text("R$" + premio.toFixed(2));
+
                         $("#" + idBox + " .aumentarCapital").val(JSON.stringify(produto));
                         $("#" + idBox + " .reduzirCapital").val(JSON.stringify(produto));
                     }
                 }
             });
-
-
-            $('.aumentarCapital').click(function() {
-                alert(JSON.stringify(this.value));
-
-                var codigoProduto = this.value;
-                var capitalTexto = $('#lblCapital' + codigoProduto).text().replace("R\$", "")
-                    .replace('.', '')
-                    .replace(',', '.');
-                var capital = parseFloat(capitalTexto);
-                capital += 1000;
-                $("#lblCapital" + codigoProduto).text("R$" + capital + ",00");
-            });
-
-            $('.reduzirCapital').click(function() {
-                alert(JSON.stringify(this.value));
-                var codigoProduto = this.value;
-                var capitalTexto = $('#lblCapital' + codigoProduto).text().replace("R\$", "")
-                    .replace('.', '')
-                    .replace(',', '.');
-                var capital = parseFloat(capitalTexto);
-                capital -= 1000;
-                $("#lblCapital" + codigoProduto).text("R$ " + capital.toFixed(2).replace(".", ",")).toLocaleString('pt-BR');
-            });
         })
+
+        function aumentarCapital(produto) {
+            var produto = JSON.parse(produto);
+            var premio = $("#box" + produto.idProduto + " .lblPremio");
+            var capital = $("#box" + produto.idProduto + " .lblCapital");
+            var novoCapital = capital.text().replace("R\$", "")
+                .replace('.', '')
+                .replace(',', '.');
+            novoCapital = parseFloat(novoCapital) + parseFloat(1000);
+            capital.text("R$" + novoCapital.toFixed(2).replace(".", ",").toLocaleString('pt-BR'));
+            premio.text("R$" + (novoCapital / produto.coberturas[0].capitalBase * produto.coberturas[0].premioBase).toFixed(2));
+        }
+
+        function reduzirCapital(produto) {
+            var produto = JSON.parse(produto);
+            var premio = $("#box" + produto.idProduto + " .lblPremio");
+            var capital = $("#box" + produto.idProduto + " .lblCapital");
+            var novoCapital = capital.text().replace("R\$", "")
+                .replace('.', '')
+                .replace(',', '.');
+            novoCapital = parseFloat(novoCapital) - 1000;
+            capital.text("R$" + novoCapital.toFixed(2).replace(".", ",").toLocaleString('pt-BR'));
+            premio.text("R$" + (novoCapital / produto.coberturas[0].capitalBase * produto.coberturas[0].premioBase).toFixed(2));
+        }
     </script>
 </head>
 
@@ -159,9 +160,9 @@
                 <div class="descricao">
                     <p style="text-align: center"><strong>Cobertura:</strong></p>
                     <div style="text-align: center;margin: 0px 0px 20px 0px" class="detalhes">
-                        <button class="aumentarCapital" value="1">+</button>
+                        <button class="aumentarCapital" onClick="aumentarCapital(this.value)" value="1">+</button>
                         <label style="margin: 0px 10px" class="lblCapital">R$10000,00</label>
-                        <button class="reduzirCapital" value="1">-</button>
+                        <button class="reduzirCapital" onClick="reduzirCapital(this.value)" value="1">-</button>
                     </div>
                 </div>
             </div>
