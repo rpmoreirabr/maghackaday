@@ -49,6 +49,8 @@
                         $("#" + idBox + " .lblPremio").text("R$" + produto.coberturas[0].custoFixo.toFixed(2));
                         $("#" + idBox + " .aumentarCapital").hide();
                         $("#" + idBox + " .reduzirCapital").hide();
+                        $("#" + idBox + " .cobertura").hide();
+
                     } else {
                         var premio = 10000 / produto.coberturas[0].capitalBase * produto.coberturas[0].premioBase;
                         $("#" + idBox + " .lblPremio").text("R$" + premio.toFixed(2));
@@ -157,7 +159,7 @@
                     <p style="text-align: center"><strong>Prêmio:</strong></p>
                     <p style="text-align: center"><label class="lblPremio">R$15,90</label></p>
                 </div>
-                <div class="descricao">
+                <div class="cobertura">
                     <p style="text-align: center"><strong>Cobertura:</strong></p>
                     <div style="text-align: center;margin: 0px 0px 20px 0px" class="detalhes">
                         <button class="aumentarCapital" onClick="aumentarCapital(this.value)" value="1">+</button>

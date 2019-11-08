@@ -15,6 +15,10 @@ body {
     margin-left: 10px;
 }
 
+.boxOferta .cobertura {
+    margin-left: 10px;
+}
+
 .boxPerfil {
     clear: both;
     border: 1pt solid black;

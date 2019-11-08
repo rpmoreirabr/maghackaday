@@ -1,7 +1,7 @@
 function getToken() {
     var params = "client_id=usrHackaDay&client_secret=aZ6a2F15kJI2t4mb&scope=apiseguradora&grant_type=client_credentials";
     var oReq = new XMLHttpRequest();
-    oReq.open("post", "https://identidadehmg.mongeralaegon.com.br/connect/token", false);
+    oReq.open("post", "https://apis-hmg.mongeralaegon.com.br/connect/token", false);
     oReq.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
     oReq.send(params);
 
